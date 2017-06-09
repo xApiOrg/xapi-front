@@ -1420,7 +1420,7 @@ var ExchangeRateService = (function () {
     ExchangeRateService.prototype.getExchangeRateFromToCurrency = function (from, to) {
         var _this = this;
         return new Promise(function (resolve) {
-            _this.http.get("http://api.fixer.io/latest?base=" + from).subscribe(function (response) {
+            _this.http.get("https://api.fixer.io/latest?base=" + from).subscribe(function (response) {
                 resolve(response.json().rates[to]);
             });
         });
