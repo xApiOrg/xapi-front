@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {Payee} from '../../step-1/payee';
-import {Account} from '../../step-2/account';
-import {PaymentService} from '../../step-3/payment.service';
-import {Fee} from "../../step-3/fee";
+import {Payee} from '../../../models/payee';
+import {Account} from '../../../models/account';
+import {PaymentService} from '../../payment.service';
+import {Fee} from "../../../models/fee";
 
 @Component({
   selector: 'app-transaction-review',

@@ -1,10 +1,10 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Payee} from '../step-1/payee';
-import {Account} from '../step-2/account';
+import {Payee} from '../models/payee';
+import {Account} from '../models/account';
 import {isNullOrUndefined} from 'util';
-import {ExchangeRateService} from './exchange-rate.service';
-import {Fee} from './fee';
-import {PAYEES} from '../../mocks/payees.mock';
+import {Fee} from '../models/fee';
+import {PAYEES} from '../mocks/payees.mock';
+import {IpayService} from './ipay.service';
 
 @Injectable()
 export class PaymentService {
@@ -58,7 +58,7 @@ export class PaymentService {
     }
     this._account = value;
     this.accountChange.emit(value);
-    this.fromCurrency = value.getCurrencyType();
+    this.fromCurrency = value.getCurrency();
   }
 
   get payee(): Payee{
@@ -70,7 +70,7 @@ export class PaymentService {
     }
     this._payee = value;
     this.payeeChange.emit(value);
-    this.toCurrency = value.getAccount().getCurrencyType();
+    this.toCurrency = value.getCurrency();
   }
 
   get toCredit(): string {
@@ -90,7 +90,7 @@ export class PaymentService {
   }
   private calculateToCredit() {
     const fromCredit = Number.parseFloat(this._fromCredit);
-    const toCredit = (fromCredit * (this.exchangeRate - this.getTotalFees() / 100)).toString();
+    const toCredit = ((1 - this.getTotalFees() / 100) * fromCredit * this.exchangeRate).toString();
     const value = (Math.ceil(Number.parseFloat(toCredit) * 100) / 100).toString();
     this.updateToCredit(value);
   }
@@ -112,7 +112,7 @@ export class PaymentService {
   }
   private calculateFromCredit() {
     const toCredit = Number.parseFloat(this.toCredit);
-    const fromCredit = (toCredit / (this.exchangeRate - this.getTotalFees() / 100)).toString();
+    const fromCredit = (toCredit / (1 - this.getTotalFees() / 100) / this.exchangeRate).toString();
     const value = (Math.ceil(Number.parseFloat(fromCredit) * 100) / 100).toString();
     this.updateFromCredit(value);
   }
@@ -195,7 +195,7 @@ export class PaymentService {
     this.savePayeeChange.emit(value);
   }
 
-  constructor(private exchangeRateService: ExchangeRateService) {
+  constructor(private ipayService: IpayService) {
     setTimeout(() => {
       this.paymentType = 'fast';
       this.feesPaymentMode = 'sender';
@@ -206,7 +206,7 @@ export class PaymentService {
   }
 
   updateExchangeRate(): void {
-    this.exchangeRateService.getExchangeRateFromToCurrency(this.fromCurrency, this.toCurrency)
+    this.ipayService.getExchangeRate(this.fromCurrency, this.toCurrency)
       .then((exchangeRate) => {
         this._exchangeRate = exchangeRate;
         this.exchangeRateChange.emit(exchangeRate);

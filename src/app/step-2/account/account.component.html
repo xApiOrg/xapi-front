@@ -1,12 +1,12 @@
 <div class="account-container">
   <div class="account-header" [@headerState]="accountSelected ? 'selected' : 'unselected'">
-    <span class="glyphicon {{account.getAccountTypeIcon()}}"></span>
-    {{account.getName()}}
+    <span class="glyphicon {{account.getIcon()}}"></span>
+    {{account.getDescription()}}
   </div>
   <div class="account-body">
     <div class="account-credit">
-      <span class="currency-flag currency-flag-{{account.getCurrencyType().toLowerCase()}}"></span>
-      {{account.getCredit() | currency:account.getCurrencyType():true:'1.2-2'}}
+      <span class="flag-icon flag-icon-{{account.getCountry()}}"></span>
+      {{account.getBalance() | currency:account.getCurrency():true:'1.2-2'}}
     </div>
     <div class="account-balance">
       Available balance

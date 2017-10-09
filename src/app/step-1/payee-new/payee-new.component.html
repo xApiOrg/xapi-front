@@ -4,21 +4,22 @@
       <app-flags-dropdown [(selectedKey)]="selection" [flagType]="'country'" [flagsMap]="flagsMap"></app-flags-dropdown>
     </div>
 
-    <div class="card" *ngFor="let section of (!!displayedCountry ? displayedCountry['sections'] : [])"
-         id="{{section['name']}}-section">
-      <div class="input" *ngFor="let field of section['fields']">
+    <div class="card" *ngFor="let section of (!!displayedCountry ? displayedCountry.getSections() : [])"
+         id="{{section.getName()}}-section">
+      <div class="input" *ngFor="let field of section.getFields()">
         <app-input
-          [(value)]="boundFormFields[field['id']]['value']"
-          [placeholder]="field['title']"
+          [(value)]="boundFormFields[field.getId()]['value']"
+          (valueChange)="onFormFieldChange(field)"
+          [placeholder]="field.getTitle()"
           [error]="getFieldError(displayedCountry, field)"
-          [tooltip]="field['tooltip']"></app-input>
+          [tooltip]="field.getTooltip()"></app-input>
       </div>
 
-      <div class="input" *ngIf="section['name'] === 'payee'">
+      <div class="input" *ngIf="section.getName() === 'payee'">
         <app-cb [name]="'Save for future payments'" [(checked)]="savePayee"></app-cb>
       </div>
 
-      <div class="input" *ngIf="section['name'] === 'payment'">
+      <div class="input" *ngIf="section.getName() === 'payment'">
         <div *ngIf="iban" style="border-bottom: 3px solid #DDD; margin-bottom: 10px">
           <app-iban [iban]="iban"></app-iban>
         </div>

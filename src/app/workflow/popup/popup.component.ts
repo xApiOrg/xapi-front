@@ -1,5 +1,5 @@
 import {Component, ContentChildren, QueryList} from '@angular/core';
-import {PopupService} from '../popup.service';
+import {PopupService} from '../../popup.service';
 import {PopupOptionComponent} from '../popup-option/popup-option.component';
 
 @Component({

@@ -162,4 +162,4 @@ export const CURRENCY_MAP = {
   'YER': '﷼',
   'ZAR': 'R',
   'ZWD': 'Z$'
-}
+};

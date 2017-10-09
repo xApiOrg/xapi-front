@@ -1,5 +1,5 @@
 import { AfterContentChecked, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Payee } from '../payee';
+import { Payee } from '../../../models/payee';
 import {PAYEES} from "../../../mocks/payees.mock";
 
 @Component({
@@ -50,6 +50,7 @@ export class PayeeSelectorComponent implements AfterContentChecked {
     if (this.payees === undefined) {
       return;
     }
+    this.recipientListContainer.nativeElement.style.height = `${this.recipientList.nativeElement.clientHeight + 10}px`;
     this.listWidth = 160 * this.payees.length - 10;
     this.updateComputedValues();
   }

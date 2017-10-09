@@ -61,7 +61,7 @@
 }
 
 .recipient-body {
-  padding: 10px 10px 20px;
+  padding: 10px 10px 25px;
   color: gray;
   position: relative;
 }
@@ -98,7 +98,7 @@
   -ms-transform: translateX(-50%);
   -o-transform: translateX(-50%);
   transform: translateX(-50%);
-  color: lightgray;
+  color: gray;
   font-size: 70%;
   height: 10px;
 }

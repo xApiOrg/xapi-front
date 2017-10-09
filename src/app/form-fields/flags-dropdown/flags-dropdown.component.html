@@ -17,7 +17,7 @@
   <div class="selection-list" [appSmoothFade]="isShowingList">
     <div *ngIf="isShowingList">
       <ul *ngIf="flagType === 'currency'">
-        <li *ngFor="let key of flagsMap.keys();"
+        <li *ngFor="let key of getFlagsMap().keys();"
             (mousedown)="selectedKey = key; toggleList()">
           <div class="currency-flag currency-flag-{{flagsMap.get(key)}}"></div>
           <span>{{key}}</span>
@@ -25,7 +25,7 @@
       </ul>
 
       <ul *ngIf="flagType === 'country'">
-        <li *ngFor="let key of flagsMap.keys();"
+        <li *ngFor="let key of getFlagsMap().keys();"
             (mousedown)="selectedKey = key; toggleList()">
           <div class="flag-icon flag-icon-{{flagsMap.get(key)}}"></div>
           <span>{{key}}</span>

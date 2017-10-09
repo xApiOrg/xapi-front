@@ -37,4 +37,8 @@ export class FlagsDropdownComponent {
   hasSelection(): boolean {
     return !!this._selectedKey && this._selectedKey.length !== 0;
   }
+
+  getFlagsMap(): Map<string, string> {
+    return new Map(this.flagsMap);
+  }
 }

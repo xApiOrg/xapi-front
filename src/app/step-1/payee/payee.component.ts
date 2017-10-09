@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { state, style, trigger } from '@angular/animations';
-import { Payee } from '../payee';
+import { Payee } from '../../../models/payee';
 
 @Component({
   selector: 'app-payee',

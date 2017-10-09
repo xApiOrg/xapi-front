@@ -6,7 +6,8 @@
 .placeholder {
   position: absolute;
   left: 0;
-  top: 9px;
+  top: 50%;
+  transform: translateY(-50%);
   padding: 1px 10px;
   color: gray;
   pointer-events: none;
@@ -69,7 +70,8 @@ input {
   position: absolute;
   top: 0;
   right: 0;
-  transform: translateY(calc(-100% - 10px));
+  transform: translateY(-100%);
+  margin-top: -10px;
   z-index: 2;
   background: red;
   color: white;

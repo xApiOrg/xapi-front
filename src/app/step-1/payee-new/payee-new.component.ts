@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Payee } from '../payee';
-import { Account } from '../../step-2/account';
-import {NewPayeeFormService} from '../new-payee-form.service';
-import {DataValidationService} from '../data-validation.service';
-import {Iban} from '../iban';
-import {PaymentService} from '../../step-3/payment.service';
+import { Payee } from '../../../models/payee';
+import { DataValidationService } from '../../data-validation.service';
+import { Iban } from '../../../models/iban';
+import { PaymentService } from '../../payment.service';
+import {IpayService} from '../../ipay.service';
+import {Country, Field, Section} from '../../../models/countrySettings';
 
 @Component({
   selector: 'app-new-payee',
@@ -12,6 +12,15 @@ import {PaymentService} from '../../step-3/payment.service';
   styleUrls: ['./payee-new.component.css']
 })
 export class PayeeNewComponent {
+  private _selection: string;
+  private _savePayee = true;
+  private boundFormFieldsErrors: Map<string, boolean>;
+  private countriesMap: Map<string, Country>;
+  boundFormFields: object;
+  flagsMap: Map<string, string>;
+  displayedCountry: Country;
+  iban: Iban;
+  isDataValidated: boolean;
 
   get savePayee(): boolean {
     return this._savePayee;
@@ -35,36 +44,21 @@ export class PayeeNewComponent {
     this.boundFormFieldsErrors.forEach((v, k) => this.boundFormFieldsErrors.set(k, false));
   }
 
-  boundFormFields: object;
-  boundFormFieldsErrors: Map<string, boolean>;
-  flagsMap: Map<string, string>;
-  countriesMap: Map<string, object>;
-  displayedCountry: object;
-  iban: Iban;
-  isDataValidated: boolean;
-  private _selection: string;
-  private _savePayee = true;
-
-  constructor(
-    newPayeeService: NewPayeeFormService,
-    private dataValidationService: DataValidationService,
-    private paymentService: PaymentService
-  ) {
+  constructor(private ipayService: IpayService,
+            private dataValidationService: DataValidationService,
+            private paymentService: PaymentService) {
     this.flagsMap = new Map();
     this.countriesMap = new Map();
     this.boundFormFields = {};
     this.boundFormFieldsErrors = new Map();
-    newPayeeService.getCountryInfo().then(countriesData => {
-      countriesData.forEach(country => {
-        this.flagsMap.set(country['name'], country['flag']);
-        this.countriesMap.set(country['name'], country);
-        country['sections'].forEach(section => {
-          section['fields'].forEach(field => {
-            if (!!field['required'] && field['required']) {
-              field['title'] += ' *';
-            }
+    ipayService.getCountrySettings().then(countries => {
+      countries.forEach(country => {
+        this.flagsMap.set(country.getName(), country.getFlag());
+        this.countriesMap.set(country.getName(), country);
+        country.getSections().forEach(section => {
+          section.getFields().forEach(field => {
             const fieldId = this.getFieldId(country, field);
-            this.boundFormFields[field['id']] = field;
+            this.boundFormFields[field.getId()] = field;
             this.boundFormFieldsErrors.set(fieldId, false);
           });
         });
@@ -72,17 +66,17 @@ export class PayeeNewComponent {
     });
   }
 
-  getFieldId(country, field): string {
-    return country['code'] + '_' + field['id'];
+  getFieldId(country: Country, field: Field): string {
+    return country.getCode() + '_' + field.getId();
   }
 
-  getFieldError(country, field): boolean {
+  getFieldError(country: Country, field: Field): boolean {
     return this.boundFormFieldsErrors.get(this.getFieldId(country, field));
   }
 
-  validateSection(section): boolean {
+  validateSection(section: Section): boolean {
     let sectionValid = true;
-    section['fields'].forEach(field => {
+    section.getFields().forEach(field => {
       const fieldValid = this.validateField(field);
       sectionValid = sectionValid && fieldValid;
       this.boundFormFieldsErrors.set(this.getFieldId(this.displayedCountry, field), !fieldValid);
@@ -90,21 +84,27 @@ export class PayeeNewComponent {
     return sectionValid;
   }
 
-  validateField(field) {
+  validateField(field: Field) {
     let fieldValid = true;
-    if (field['required'] !== undefined && field['required'] === true) {
-      const fieldValue = this.boundFormFields[field['id']]['value'];
+    if (field.isRequired()) {
+      const fieldValue = this.boundFormFields[field.getId()]['value'];
       fieldValid = fieldValid && fieldValue !== undefined && fieldValue.length > 0;
     }
     return fieldValid;
   }
 
+  onFormFieldChange(field: Field) {
+    if (field.getSectionName() === 'payment') {
+      this.isDataValidated = false;
+    }
+  }
+
   onPaymentSectionSubmit() {
-    const paymentSection = this.displayedCountry['sections'].find(section => section['name'] === 'payment');
+    const paymentSection = this.displayedCountry.getSections().find(section => section.getName() === 'payment');
     const paymentData = {};
     if (this.validateSection(paymentSection)) {
-      paymentSection['fields'].forEach(field => {
-        paymentData[field['id']] = this.boundFormFields[field['id']]['value'];
+      paymentSection.getFields().forEach(field => {
+        paymentData[field.getId()] = this.boundFormFields[field.getId()]['value'];
       });
       this.dataValidationService.validate(paymentData).then(validationData => {
         this.isDataValidated = validationData['isValid'];
@@ -136,7 +136,7 @@ export class PayeeNewComponent {
 
   validateForm(): boolean {
     let formValid = true;
-    this.displayedCountry['sections'].forEach(section => {
+    this.displayedCountry.getSections().forEach(section => {
       formValid = formValid && this.validateSection(section);
     });
     return formValid;
@@ -145,16 +145,10 @@ export class PayeeNewComponent {
   submitPayee() {
     if (this.validateForm()) {
       const payee = new Payee(
+        0,
         this.boundFormFields['payee-name']['value'],
-        new Account(
-          'EUR',
-          'bank',
-          this.selection,
-          this.flagsMap.get(this.selection),
-          1000,
-          '1111-1111-1111-1111',
-          'Auto generated payee'
-        )
+        'EUR',
+        this.flagsMap.get(this.selection)
       );
       this.paymentService.payee = payee;
     }

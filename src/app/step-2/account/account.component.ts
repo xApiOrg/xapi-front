@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Account} from '../account';
+import {Account} from '../../../models/account';
 import {state, style, trigger} from '@angular/animations';
 
 @Component({

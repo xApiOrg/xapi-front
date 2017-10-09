@@ -12,7 +12,7 @@
         </app-tab>
 
         <app-tab [title]="'Select an existing payee'">
-          <app-payee-selector [(selectedRecipient)]="payee"></app-payee-selector>
+          <app-payee-selector [payees]="payees" [(selectedRecipient)]="payee"></app-payee-selector>
         </app-tab>
       </app-tabs-manager>
     </app-step>
@@ -21,7 +21,7 @@
     <app-step [name]="'accountSelect'" [title]="'Pay with:'" [selectedProperties]="accountSelectedProperties">
       <app-tabs-manager>
         <app-tab [title]="'Select an account'">
-          <app-account-selector [(selectedAccount)]="account"></app-account-selector>
+          <app-account-selector [accounts]="accounts" [(selectedAccount)]="account"></app-account-selector>
         </app-tab>
       </app-tabs-manager>
     </app-step>
@@ -30,7 +30,7 @@
     <app-step [name]="'formFill'" [title]="'Set up payment'" [selectedProperties]="formSelectedProperties">
       <app-tabs-manager>
         <app-tab [title]="'Payment details'">
-          <app-payment></app-payment>
+          <app-payment [accounts]="accounts"></app-payment>
         </app-tab>
       </app-tabs-manager>
     </app-step>

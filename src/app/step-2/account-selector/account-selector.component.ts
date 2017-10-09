@@ -1,5 +1,5 @@
 import { AfterContentChecked, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Account } from '../account';
+import { Account } from '../../../models/account';
 import {ACCOUNTS} from "../../../mocks/accounts.mock";
 
 @Component({
@@ -31,7 +31,7 @@ export class AccountSelectorComponent implements AfterContentChecked {
     }
   }
 
-  @Input() accounts: Account[] = ACCOUNTS;
+  @Input() accounts: Account[];
   @ViewChild('accountList') accountList: ElementRef;
   @ViewChild('accountListContainer') accountListContainer: ElementRef;
   listOffset = 0;
@@ -50,6 +50,7 @@ export class AccountSelectorComponent implements AfterContentChecked {
     if (this.accounts === undefined) {
       return;
     }
+    this.accountListContainer.nativeElement.style.height = `${this.accountList.nativeElement.clientHeight + 10}px`;
     this.listWidth = 160 * this.accounts.length - 10;
     this.updateComputedValues();
   }

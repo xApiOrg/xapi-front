@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Iban} from '../iban';
+import {Iban} from '../../../models/iban';
 
 @Component({
   selector: 'app-iban',

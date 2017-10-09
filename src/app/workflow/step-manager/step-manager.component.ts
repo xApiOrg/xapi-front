@@ -1,6 +1,6 @@
 import {AfterContentInit, Component, ContentChildren, OnInit, QueryList} from '@angular/core';
 import {StepComponent} from '../step/step.component';
-import {StepManagerService} from '../step-manager.service';
+import {StepManagerService} from '../../step-manager.service';
 
 @Component({
   selector: 'app-step-manager',

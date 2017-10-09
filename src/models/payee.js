@@ -2,7 +2,7 @@
 var account_1 = require("./account");
 var Recipient = (function () {
     function Recipient(name, account) {
-        if (name && account && account.getAccountType() === account_1.Account.ACCOUNT_BANK) {
+        if (name && account && account.getType() === account_1.Account.ACCOUNT_CASH) {
             this.name = name;
             this.account = account;
         }
@@ -14,7 +14,7 @@ var Recipient = (function () {
         return this.name;
     };
     Recipient.prototype.getAccount = function () {
-        return new account_1.Account(this.account.getCurrencyType(), this.account.getAccountType(), this.account.getCredit(), this.account.getNumber(), this.account.getName());
+        return new account_1.Account(this.account.getCurrency(), this.account.getType(), this.account.getBalance(), this.account.getNumber(), this.account.getName());
     };
     return Recipient;
 }());

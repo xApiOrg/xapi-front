@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {Payee} from '../../step-1/payee';
-import {PopupService} from '../../workflow/popup.service';
-import {StepManagerService} from '../../workflow/step-manager.service';
-import {PaymentService} from '../payment.service';
-import {Account} from '../../step-2/account';
+import {Payee} from '../../../models/payee';
+import {PopupService} from '../../popup.service';
+import {StepManagerService} from '../../step-manager.service';
+import {PaymentService} from '../../payment.service';
+import {Account} from '../../../models/account';
 
 @Component({
   selector: 'app-payment',
@@ -11,12 +11,6 @@ import {Account} from '../../step-2/account';
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent {
-  popupService: PopupService;
-  stepManagerService: StepManagerService;
-  paymentService: PaymentService;
-  selectedMoneyInput = 0;
-  currencyMap = new Map();
-  payee: Payee;
   private _fromCurrency: string;
   private _toCurrency: string;
   private _fromCredit: string;
@@ -25,6 +19,13 @@ export class PaymentComponent {
   private _useFeesAccount: boolean;
   private _feesAccount: Account;
   private _paymentType: string;
+  popupService: PopupService;
+  stepManagerService: StepManagerService;
+  paymentService: PaymentService;
+  selectedMoneyInput = 0;
+  currencyMap = new Map();
+  payee: Payee;
+  @Input() accounts: Account[];
 
   get paymentType(): string {
     return this._paymentType;
@@ -99,6 +100,7 @@ export class PaymentComponent {
     this.currencyMap.set('EUR', 'eur');
     this.currencyMap.set('GBP', 'gbp');
     this.currencyMap.set('USD', 'usd');
+    this.currencyMap.set('RUB', 'rub');
     transactionService.fromCurrencyChange.subscribe((fromCurrency) => {
       this._fromCurrency = fromCurrency;
     });

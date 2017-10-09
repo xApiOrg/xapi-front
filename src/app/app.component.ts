@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { Account } from './step-2/account';
-import { Payee } from './step-1/payee';
-import {PopupService} from './workflow/popup.service';
-import {StepManagerService} from './workflow/step-manager.service';
+import { Account } from '../models/account';
+import { Payee } from '../models/payee';
+import {PopupService} from './popup.service';
+import {StepManagerService} from './step-manager.service';
 import {StepSelection} from './workflow/step/step.component';
-import {PaymentService} from './step-3/payment.service';
+import {PaymentService} from './payment.service';
 import {isNullOrUndefined} from 'util';
+import {IpayService} from "./ipay.service";
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,11 @@ import {isNullOrUndefined} from 'util';
 export class AppComponent {
   private _payee: Payee;
   private _account: Account;
+  payees: Payee[];
+  accounts: Account[];
   popupService: PopupService;
   paymentService: PaymentService;
+  ipayService: IpayService;
   payeeSelectedProperties = [];
   accountSelectedProperties = [];
   formSelectedProperties = [];
@@ -33,7 +37,7 @@ export class AppComponent {
     this._payee = value;
     this.transactionService.payee = value;
     this.payeeSelectedProperties = [
-      new StepSelection(this.capitalizeString(value.getName()), `(${this.capitalizeString(value.getAccount().getCountry())})`),
+      new StepSelection(this.capitalizeString(value.getName()), `(${this.capitalizeString(value.getCountry())})`),
     ];
     this.stepManagerService.doProgress('accountSelect');
   }
@@ -50,15 +54,17 @@ export class AppComponent {
     this._account = value;
     this.transactionService.account = value;
     this.accountSelectedProperties = [
-      new StepSelection(value.getName(), `(${value.getLastDigits()}) ${value.getCurrencyType().toUpperCase()}`)
+      new StepSelection(value.getDescription(), `(${value.getLastDigits()}) ${value.getCurrency().toUpperCase()}`)
     ];
     this.stepManagerService.doProgress('formFill');
   }
 
   constructor(popupService: PopupService,
-              paymentService: PaymentService,
-              private stepManagerService: StepManagerService,
-              private transactionService: PaymentService) {
+            paymentService: PaymentService,
+            ipayService: IpayService,
+            private stepManagerService: StepManagerService,
+            private transactionService: PaymentService) {
+    this.ipayService = ipayService;
     this.popupService = popupService;
     this.paymentService = paymentService;
     transactionService.accountChange.subscribe((account) => {
@@ -66,6 +72,12 @@ export class AppComponent {
     });
     transactionService.payeeChange.subscribe((payee) => {
       this.payee = payee;
+    });
+    ipayService.getPayees().then(payees => {
+      this.payees = payees;
+    });
+    ipayService.getAccounts().then((accounts) => {
+      this.accounts = accounts;
     });
   }
 

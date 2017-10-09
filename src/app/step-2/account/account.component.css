@@ -61,7 +61,7 @@
 
 .account-body {
   position: relative;
-  padding: 10px 10px 20px;
+  padding: 10px 10px 25px;
 }
 
 .account-balance {
@@ -69,7 +69,7 @@
   left: 50%;
   transform: translateX(-50%);
   background: white;
-  color: lightgrey;
+  color: gray;
   font-size: 70%;
 }
 

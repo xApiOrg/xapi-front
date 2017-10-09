@@ -14,7 +14,7 @@
       <div style="-webkit-flex: 1;-ms-flex: 1;flex: 1;">
         <app-money-input [currencyType]="fromCurrency"
                          [(value)]="fromCredit"
-                         [placeholder]="'Amount to pay'"
+                         [placeholder]="'You pay'"
                          (selected)="selectedMoneyInput = 0">
         </app-money-input>
       </div>
@@ -45,7 +45,7 @@
       <div style="-webkit-flex: 1;-ms-flex: 1;flex: 1;">
         <app-money-input [currencyType]="toCurrency"
                          [(value)]="toCredit"
-                         [placeholder]="'Amount to transfer'"
+                         [placeholder]="'The payee receives'"
                          (selected)="selectedMoneyInput = 1">
         </app-money-input>
       </div>
@@ -66,7 +66,7 @@
     <app-input [placeholder]="'Reference'"
                [tooltip]="'The reference of the transaction is a small optional text that describes its purpose'">
     </app-input>
-    <div style="margin-top:10px" *ngIf="!!payee && payee.getAccount().getCountryCode() !== 'us'">
+    <div style="margin-top:10px" *ngIf="!!payee && payee.getCountry().toLowerCase() !== 'us'">
       <app-expandable-box [title]="'additional reference fields'">
         <div>
           <app-input [placeholder]="'Reference #2'"></app-input>
@@ -100,7 +100,7 @@
 
           <div [appSmoothFade]="useFeesAccount">
             <div *ngIf="useFeesAccount" style="display: block;margin-top: 10px">
-              <app-account-selector [(selectedAccount)]="feesAccount"></app-account-selector>
+              <app-account-selector [accounts]="accounts" [(selectedAccount)]="feesAccount"></app-account-selector>
             </div>
           </div>
         </div>

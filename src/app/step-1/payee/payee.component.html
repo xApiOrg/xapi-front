@@ -6,11 +6,11 @@
     </div>
     <div class="recipient-body">
       <div class="flag">
-        <span class="currency-flag currency-flag-{{payee.getAccount().getCurrencyType().toLowerCase()}}"></span>
-        {{payee.getAccount().getCurrencyType().toUpperCase()}}
+        <span class="flag-icon flag-icon-{{payee.getCountry()}}"></span>
+        {{payee.getCurrency().toUpperCase()}}
       </div>
       <div class="recipient-body-description">
-        <div class="ending">account ending with {{payee.getAccount().getLastDigits()}}</div>
+        <div class="ending">Account currency</div>
       </div>
     </div>
   </div>

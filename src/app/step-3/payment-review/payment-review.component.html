@@ -2,13 +2,13 @@
   <div class="section-header">Payee</div>
   <ul>
     <li class="capitalize">Name: {{!!payee ? payee.getName() : ''}} </li>
-    <li>IBAN: {{!!payee ? payee.getAccount().getNumber() : ''}}</li>
+    <!--<li>IBAN: {{!!payee ? payee.getAccount().getNumber() : ''}}</li>-->
   </ul>
 </div>
 <div class="section">
   <div class="section-header">Account</div>
   <ul>
-    <li class="capitalize">Name: {{!!account ? account.getName() : ''}}</li>
+    <li class="capitalize">Name: {{!!account ? account.getDescription() : ''}}</li>
     <li>Card / Account number: {{!!account ? account.getNumber() : ''}}</li>
   </ul>
 </div>
