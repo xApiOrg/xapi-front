@@ -1,0 +1,17 @@
+<div class="recipient-container">
+  <div *ngIf="payee">
+    <div class="recipient-header" [@headerState]="selected ? 'selected' : 'unselected'">
+      <span class="glyphicon glyphicon-user"></span>
+      <span class="text">{{payee.getName()}}</span>
+    </div>
+    <div class="recipient-body">
+      <div class="flag">
+        <span class="currency-flag currency-flag-{{payee.getAccount().getCurrencyType().toLowerCase()}}"></span>
+        {{payee.getAccount().getCurrencyType().toUpperCase()}}
+      </div>
+      <div class="recipient-body-description">
+        <div class="ending">account ending with {{payee.getAccount().getLastDigits()}}</div>
+      </div>
+    </div>
+  </div>
+</div>

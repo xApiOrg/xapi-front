@@ -1,0 +1,118 @@
+.content {
+  display: block;
+  position: relative;
+}
+
+.form-container {
+  display: block;
+  max-width: 500px;
+}
+
+label {
+  display: block;
+  color: gray;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+select {
+  display: inline-block;
+  width: 100%;
+  border: none;
+  background: white;
+  box-shadow: 0 2px 5px lightgray;
+  padding: 10px;
+}
+
+button {
+  width: 100%;
+}
+
+button.submit-button {
+  margin-top: 10px;
+}
+
+button.submit-button::before {
+  display: block;
+  position: absolute;
+  content: '';
+  width: 3px;
+  height: 20px;
+  top: 0;
+  left: 50%;
+  transform: translateY(-100%) translateX(-50%);
+  background: red;
+  pointer-events: none;
+}
+
+button.submit-button.deactivated {
+  outline: none;
+}
+
+button.submit-button.deactivated::before {
+  background: #DDD;
+  /*background: -webkit-linear-gradient(to bottom, red, #F0F0F0); /* For Safari 5.1 to 6.0 */
+  /*background: -o-linear-gradient(to bottom, red, #F0F0F0); /* For Opera 11.1 to 12.0 */
+  /*background: -moz-linear-gradient(to bottom, red, #F0F0F0); /* For Firefox 3.6 to 15 */
+  /*background: linear-gradient(to bottom, red, #F0F0F0); /* Standard syntax */
+}
+
+input {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+}
+
+.flags {
+  padding: 0 10px;
+  background: white;
+  height: 40px;
+  box-shadow: 0 2px 5px lightgray;
+}
+
+.flags:hover {
+  box-shadow: -2px 3px 10px lightgray;
+}
+
+input + input, .input + .input, input + .input, .input + input {
+  margin-top: 10px;
+}
+
+.vertical-input input, .vertical-input .input {
+  display: block;
+}
+
+.vertical-input input + input, .vertical-input .input + .input,
+.vertical-input input + .input, .vertical-input .input + input {
+  margin-top: 10px;
+}
+
+.horizontal-input {
+  display: inline-block;
+  width: 100%;
+}
+
+.horizontal-input input, .horizontal-input .input {
+  display: inline-block;
+}
+
+.horizontal-input input + input, .horizontal-input .input + .input,
+.horizontal-input .input + input, .horizontal-input input + .input{
+  margin-top: 10px;
+}
+
+.vertical-input + .horizontal-input, input + .horizontal-input, select + .horizontal-input,
+.horizontal-input + .vertical-input, input + .vertical-input, select + .vertical-input {
+  margin-top: 10px;
+}
+
+* + .check-box {
+  margin-top: 10px;
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+}

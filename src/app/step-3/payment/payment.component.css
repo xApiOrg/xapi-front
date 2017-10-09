@@ -1,0 +1,300 @@
+.content {
+  max-width: 500px;
+}
+
+.section {
+  position: relative;
+}
+
+* + .section {
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+* + .section::before {
+  display: block;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  width: 100%;
+  height: 1px;
+  background: lightgray;
+}
+
+.currency span {
+  font-size: 100%;
+}
+
+.advanced-options-list label {
+  margin-top: 10px;
+  color: gray;
+}
+
+.advanced-options-list label:hover {
+  font-weight: 100;
+  margin-top: 10px;
+  color: darkslategray;
+}
+
+.advanced-options-list input {
+  width: auto;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.advanced-options-list .check-box {
+  display: block !important;
+  margin: 0;
+}
+
+.currency select {
+  padding: 5px;
+  border: 1px lightgrey solid;
+}
+
+.payment-type-container * {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  -webkit-flex: 1; /* Safari 6.1+ */
+  -ms-flex: 1; /* IE 10 */
+  flex: 1;
+  width: 100%;
+  max-width: 400px;
+}
+
+.estimated-arrival {
+  color: gray;
+}
+
+.estimated-arrival span {
+  color: red;
+}
+
+.advanced-options-container {
+  display: block;
+  margin-top: 10px;
+}
+
+.advanced-options-header {
+  display: inline-block;
+}
+
+.advanced-options-header * {
+  cursor: pointer !important;
+}
+
+.advanced-options-title {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.advanced-options-header .glyphicon {
+  display: inline-block;
+  vertical-align: middle;
+  transition: transform 250ms;
+}
+
+.advanced-options-container.expanded .glyphicon {
+  transform: rotate(90deg);
+}
+
+.check-box {
+  margin-left: 10px;
+}
+
+.check-box + .check-box {
+  margin-top: 0
+}
+
+.transaction-reference-container {
+  margin-top: 20px;
+}
+
+/* Devices other than mobile */
+@media only screen and (min-width : 480px) {
+  .money-input {
+    display: flex;
+    position: relative;
+    max-width: 400px;
+  }
+
+  .money-input .currency {
+    position: relative;
+    margin-left: 10px;
+    padding: 0 5px;
+    color: red;
+    font-size: 120%;
+    text-align: center;
+    border: 1px solid lightgray;
+    transition: border 250ms, box-shadow 250ms;
+  }
+
+  .money-input .currency:hover {
+    border-color: transparent;
+    -webkit-box-shadow: -2px 3px 10px lightgray;
+    -moz-box-shadow: -2px 3px 10px lightgray;
+    box-shadow: -2px 3px 10px lightgray;
+  }
+
+  .money-input .currency span {
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .fees-box {
+    display: block;
+    margin-left: 10px;
+  }
+
+  .fees-box .names-box {
+    display: inline-block;
+    text-align: right;
+  }
+
+  .fees-box .names-box span {
+    display: block;
+    color: gray;
+    padding-top: 5px;
+  }
+
+  .fees-box .values-box {
+    display: inline-block;
+    position: relative;
+    margin-left: 10px;
+    border-left: 1px gray solid;
+    padding: 20px 0 20px 10px;
+  }
+
+  .fees-box .values-box li {
+    position: relative;
+    list-style: none;
+    color: gray;
+    margin-left: 10px;
+    padding-top: 5px;
+  }
+
+  .fees-box .values-box li::before {
+    display: block;
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    content: '';
+    width: 10px;
+    height: 1px;
+    background: gray;
+  }
+
+  .fees-box .values-box li::after {
+    display: block;
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    content: '';
+    width: 3px;
+    height: 5px;
+    background: gray;
+  }
+
+  .fees-box .values-box li.important, .fees-box .names-box span.important {
+    color: white;
+    padding: 1px 5px;
+    background: red;
+    border-radius: 2px;
+    box-shadow: 0 0 5px red;
+  }
+}
+
+/* Mobile devices */
+@media only screen and (max-width : 480px) {
+  .money-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .money-input .currency {
+    position: relative;
+    color: red;
+    font-size: 120%;
+    height: 30px;
+    border: none !important;
+  }
+
+  .fees-box {
+    display: block;
+    position: relative;
+    text-align: center;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid lightgray;
+    /*border-right: none;
+    border-left: none;*/
+  }
+
+  .fees-box::before {
+    display: block;
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 20px;
+    transform: translateX(-50%) translateY(-100%);
+    background: lightgray;
+  }
+
+  .fees-box::after {
+    display: block;
+    position: absolute;
+    content: '';
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    height: 20px;
+    transform: translateX(-50%) translateY(100%);
+    background: lightgray;
+  }
+
+  .fees-box .names-box {
+    display: inline-block;
+    text-align: right;
+  }
+
+  .fees-box .names-box span {
+    display: block;
+    color: gray;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .fees-box .values-box {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+  }
+
+  .fees-box .values-box li {
+    position: relative;
+    list-style: none;
+    color: gray;
+    border-bottom: 1px solid lightgray;
+  }
+}

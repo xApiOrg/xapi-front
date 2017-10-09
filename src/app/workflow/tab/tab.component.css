@@ -1,0 +1,101 @@
+.content {
+  display: block;
+  position: relative;
+  background: red;
+  color: white;
+  max-width: 220px;
+  cursor: pointer;
+  -webkit-box-shadow: -2px 5px 5px lightgray;
+  -moz-box-shadow: -2px 5px 5px lightgray;
+  box-shadow: -2px 5px 5px lightgray;
+  margin-top: 10px;
+  outline: 0 solid red;
+  transition: margin 1000ms, transform 1000ms, width 1000ms, padding 1000ms, border 250ms, background 250ms, color 0ms,
+  outline 100ms;
+}
+
+.content:hover {
+  outline: 3px solid red;
+  background: white;
+  color: red;
+}
+
+.content::before {
+  display: block;
+  position: absolute;
+  content: "";
+  width: 20px;
+  height: 1px;
+  background: red;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%) translateX(-100%);
+  box-shadow: -2px 5px 5px lightgray;
+  transition: width 1000ms, transform 250ms;
+}
+
+.content.is-selected::before {
+  width: 40px;
+  transform: translateY(-50%) translateX(calc(-100% - 2px));
+}
+
+.title {
+  display: inline-block;
+  text-align: center;
+  padding: 8px 10px;
+  transition: all 250ms !important;
+}
+
+.selected-content {
+  padding: 0;
+  display: none;
+}
+
+.content.is-selected .selected-content {
+  display: block;
+  padding: 0 10px 10px 10px;
+}
+
+.content.is-selected {
+  margin-left: 20px;
+  max-width: 100vw;
+  background: transparent;
+  box-shadow: -5px 5px 30px transparent;
+  padding: 10px;
+  cursor: default;
+  border: none;
+  border-left: 3px solid red;
+  outline: none;
+  color: red;
+  transition: margin 1000ms, transform 1000ms, width 1000ms, padding 1000ms, border 250ms, background 0ms, color 0ms,
+  outline 100ms;
+}
+
+.content.is-selected .title {
+  background: transparent;
+  border: none;
+  pointer-events: none;
+  font-size: 120%;
+}
+
+.content.is-first {
+  margin-top: 0;
+}
+
+/* Mobile devices */
+@media only screen and (max-width : 480px) {
+  .content.is-selected {
+    margin-left: -20px;
+    border-left: none;
+    box-shadow: none;
+  }
+  .content.is-selected:after {
+    opacity: 0;
+  }
+  .content.is-selected:before {
+    opacity: 0;
+  }
+  .content.is-selected {
+    padding-top: 0;
+  }
+}

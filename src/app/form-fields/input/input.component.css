@@ -1,0 +1,107 @@
+.content {
+  position: relative;
+}
+
+
+.placeholder {
+  position: absolute;
+  left: 0;
+  top: 9px;
+  padding: 1px 10px;
+  color: gray;
+  pointer-events: none;
+  transition: all 250ms;
+}
+
+.content.focused .placeholder, .content.has-value .placeholder {
+  top: 0;
+  z-index: 1;
+  transform: translateY(-50%) scale(0.8);
+  background: white;
+  color: darkslategray;
+}
+
+.content.focused:not(.has-value) .placeholder {
+  background: gray;
+  color: white;
+}
+
+.content.hover:not(.focused):not(.has-value) .placeholder {
+  --left: 5px;
+  color: darkslategray;
+}
+
+.wrapper {
+  display: block;
+  position: relative;
+}
+
+input {
+  display: block;
+  width: 100%;
+}
+
+.content.has-tooltip input {
+  padding-right: 40px;
+}
+
+.wrapper .input-tooltip {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 40px;
+}
+
+.input-tooltip span {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background: white;
+  border-radius: 100%;
+  font-size: 125%;
+  cursor: help;
+}
+
+.tooltip-body {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(calc(-100% - 10px));
+  z-index: 2;
+  background: red;
+  color: white;
+  padding: 10px;
+  border-radius: 3px;
+  max-height:100px;
+  width: 300px;
+  box-shadow: 0 0 1px red;
+  pointer-events: none;
+}
+
+.format {
+  position: absolute;
+  left: 10px;
+  top: 9px;
+  color: lightgray;
+}
+
+.glyphicon {
+  color: red;
+  box-shadow: 0 0 1px;
+}
+
+.content.error input {
+  border-left: 3px solid red;
+  background: rgba(255, 0, 0, 0.1) !important;
+}
+
+.content.error input:focus {
+  background: rgba(255, 0, 0, 0) !important;
+}
+
+.content.error .placeholder {
+  margin-left: 10px;
+}

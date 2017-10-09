@@ -1,0 +1,33 @@
+<div class="content"
+     [class.selected]="isSelected"
+     [class.unselected]="!isSelected"
+     [class.last-unselected]="!isSelected && isLastStep"
+     [class.last-selected]="isSelected && isLastStep"
+     [class.is-time]="isTime">
+  <div class="step-header" (click)="stepClick.emit()">
+    <div class="header-order"><span>{{stepIndex}}</span></div>
+    <div class="header-title">{{title}}</div>
+  </div>
+
+  <div #content class="step-content" [appSmoothFade]="isSelected">
+    <div *ngIf="isSelected"></div>
+    <ng-content></ng-content>
+  </div>
+
+  <div class="selected-properties">
+    <div class="selected-properties-container"
+         *ngIf="isTime && !isSelected && !!selectedProperties && selectedProperties.length !== 0">
+      <div class="selected-property" *ngFor="let property of selectedProperties">
+        <span class="property-name">
+          {{property.propertyName}}
+        </span>
+        <span class="property-value">
+          {{property.propertyValue}}
+        </span>
+      </div>
+      <div class="list-element">
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>

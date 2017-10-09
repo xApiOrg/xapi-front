@@ -1,0 +1,122 @@
+<div class="content">
+  <div class="card">
+    <div class="payment-type-container">
+      <span style="color:gray">Payment type:</span>
+      <app-rb-group [(selectionIndex)]="paymentType">
+        <app-rb [title]="'fast'"></app-rb>
+        <app-rb [title]="'cheap'"></app-rb>
+      </app-rb-group>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex">
+      <div style="-webkit-flex: 1;-ms-flex: 1;flex: 1;">
+        <app-money-input [currencyType]="fromCurrency"
+                         [(value)]="fromCredit"
+                         [placeholder]="'Amount to pay'"
+                         (selected)="selectedMoneyInput = 0">
+        </app-money-input>
+      </div>
+      <div style="padding-left:10px; width: 100px">
+        <app-flags-dropdown [flagType]="'currency'"
+                            [flagsMap]="currencyMap"
+                            [(selectedKey)]="fromCurrency"
+                            [allowSelection]="false">
+        </app-flags-dropdown>
+      </div>
+    </div>
+
+    <div class="fees-box">
+      <div class="names-box">
+        <span *ngFor="let fee of paymentService.fees" class="fee-name" [class.important]="fee.isImportant()">{{fee.getName()}} fee</span>
+        <span class="fee-name">Exchange Rate</span>
+      </div>
+      <div class="values-box">
+        <li *ngFor="let fee of paymentService.fees" [class.important]="fee.isImportant()">
+          {{fee.getAmount() | number:'1.2-2'}}%
+          ({{(fromCredit * fee.getAmount() / 100 | currency:fromCurrency:true:'1.2-2')}})
+        </li>
+        <li>1 : {{paymentService.exchangeRate}}</li>
+      </div>
+    </div>
+
+    <div style="display:flex">
+      <div style="-webkit-flex: 1;-ms-flex: 1;flex: 1;">
+        <app-money-input [currencyType]="toCurrency"
+                         [(value)]="toCredit"
+                         [placeholder]="'Amount to transfer'"
+                         (selected)="selectedMoneyInput = 1">
+        </app-money-input>
+      </div>
+      <div style="padding-left:10px; width: 100px">
+        <app-flags-dropdown [flagType]="'currency'"
+                            [flagsMap]="currencyMap"
+                            [(selectedKey)]="toCurrency">
+        </app-flags-dropdown>
+      </div>
+    </div>
+
+    <div style="margin-top:10px" class="estimated-arrival">
+      Estimated arrival: <span>{{paymentService.estimatedArrival}}</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <app-input [placeholder]="'Reference'"
+               [tooltip]="'The reference of the transaction is a small optional text that describes its purpose'">
+    </app-input>
+    <div style="margin-top:10px" *ngIf="!!payee && payee.getAccount().getCountryCode() !== 'us'">
+      <app-expandable-box [title]="'additional reference fields'">
+        <div>
+          <app-input [placeholder]="'Reference #2'"></app-input>
+        </div>
+        <div style="margin-top:10px">
+          <app-input [placeholder]="'Reference #3'"></app-input>
+        </div>
+        <div style="margin-top:10px">
+          <app-input [placeholder]="'Reference #4'"></app-input>
+        </div>
+      </app-expandable-box>
+    </div>
+
+    <div style="margin-top: 10px">
+      <app-expandable-box [title]="'advanced options'">
+        <label for="select-fees-payment">Select how to pay the fees</label>
+        <select [(ngModel)]="feesPaymentMode" id="select-fees-payment">
+          <option value="sender">Sender</option>
+          <option value="shared">Shared</option>
+          <option value="receiver">Receiver</option>
+        </select>
+
+        <div *ngIf="'sender' === feesPaymentMode || 'shared' === feesPaymentMode">
+          <div style="display:block;margin-left:0" class="check-box">
+            <input [(ngModel)]="useFeesAccount" style="display:inline-block;width:auto" type="checkbox" id="use-account-for-fees">
+            <label for="use-account-for-fees">
+              <span class="glyphicon glyphicon-ok"></span>
+              Pay fees with another account
+            </label>
+          </div>
+
+          <div [appSmoothFade]="useFeesAccount">
+            <div *ngIf="useFeesAccount" style="display: block;margin-top: 10px">
+              <app-account-selector [(selectedAccount)]="feesAccount"></app-account-selector>
+            </div>
+          </div>
+        </div>
+
+        <div style="max-width:400px;margin-top:10px">
+          <span>Pay on:</span>
+          <app-calendar></app-calendar>
+        </div>
+      </app-expandable-box>
+    </div>
+  </div>
+
+  <div class="card">
+    <button type="button" style="width: 100%" (click)="popupService.changeOption('review')">
+      Review payment
+      <span class="glyphicon glyphicon-arrow-right"></span>
+    </button>
+  </div>
+</div>

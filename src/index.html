@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TestProjecty</title>
+  <script>
+    var baseElement = document.createElement("base");
+    var pathname = document.location.pathname;
+    var lastSlashIndex = pathname.lastIndexOf("/");
+    var loc = pathname.substring(0, lastSlashIndex + 1);
+    baseElement.setAttribute("href", loc);
+    document.head.appendChild(baseElement);
+  </script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="stylesheet" type="text/css" href="assets/libs/cssreset.css">
+  <link rel="stylesheet" href="assets/libs/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/libs/currency-flags/dist/currency-flags.min.css">
+  <link rel="stylesheet" href="assets/libs/country-flags/css/flag-icon.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Oxygen+Mono" rel="stylesheet">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>

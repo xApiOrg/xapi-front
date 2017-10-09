@@ -1,0 +1,80 @@
+.account-container {
+  display: inline-block;
+  position: relative;
+  width: 150px;
+  max-width: 150px;
+  background: white;
+  box-shadow: 0 2px 5px lightgray;
+  font-size: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 250ms, transform 250ms;
+}
+
+.account-container:hover {
+  box-shadow: 0 5px 10px lightgray;
+  transform: scale(1.05);
+}
+
+.account-container * {
+  cursor: pointer !important;
+}
+
+.account-header {
+  position: relative;
+  padding: 15px 15px 5px;
+  background: white;
+  color: #FF0000;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  z-index: 0;
+  transition: color 100ms;
+}
+
+.account-header span {
+  display: block;
+  font-size: 40px;
+  margin-bottom: 5px;
+}
+
+.account-header::after {
+  display: block;
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  max-height: 0;
+  background: red;
+  transition: max-height 500ms;
+  z-index: -1;
+}
+
+.account-container:hover .account-header::after {
+  max-height: 200px;
+}
+
+.account-container:hover .account-header {
+  color: white;
+}
+
+.account-body {
+  position: relative;
+  padding: 10px 10px 20px;
+}
+
+.account-balance {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  color: lightgrey;
+  font-size: 70%;
+}
+
+.account-credit {
+  border-bottom: 1px solid lightgray;
+  color: gray;
+}
+

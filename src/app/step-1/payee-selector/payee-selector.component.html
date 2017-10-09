@@ -1,0 +1,19 @@
+<div class="content">
+    <div class="arrow" (click)="scrollList(-1)" *ngIf="isScrollNeeded">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </div>
+
+    <div #recipientListContainer class="recipient-list-container">
+      <div #recipientList class="recipient-list">
+        <div *ngIf="payees">
+          <app-payee class="recipient" *ngFor="let payee of payees"
+                     [selected]="selectedRecipient === payee"
+                     [payee]="payee" (click)="selectedRecipient = payee"></app-payee>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow" (click)="scrollList(1)" *ngIf="isScrollNeeded">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </div>
+</div>

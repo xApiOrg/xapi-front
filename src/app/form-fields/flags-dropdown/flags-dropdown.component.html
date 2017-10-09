@@ -1,0 +1,36 @@
+<div class="content" [class.expandable]="allowSelection" [class.has-selection]="hasSelection()"
+     *ngIf="flagsMap" (click)="toggleList()">
+  <div class="selection">
+    <div class="selection-content" *ngIf="flagType === 'currency'">
+      <div class="currency-flag currency-flag-{{flagsMap.get(selectedKey)}}"></div>
+      <span class="text">{{selectedKey}}</span>
+      <span class="selection-arrow glyphicon glyphicon-chevron-down" *ngIf="allowSelection"></span>
+    </div>
+
+    <div class="selection-content" *ngIf="flagType === 'country'">
+      <div class="flag-icon flag-icon-{{flagsMap.get(selectedKey)}}"></div>
+      <span class="text">{{!!selectedKey ? selectedKey : 'Select a country'}}</span>
+      <span class="selection-arrow glyphicon glyphicon-chevron-down" *ngIf="allowSelection"></span>
+    </div>
+  </div>
+
+  <div class="selection-list" [appSmoothFade]="isShowingList">
+    <div *ngIf="isShowingList">
+      <ul *ngIf="flagType === 'currency'">
+        <li *ngFor="let key of flagsMap.keys();"
+            (mousedown)="selectedKey = key; toggleList()">
+          <div class="currency-flag currency-flag-{{flagsMap.get(key)}}"></div>
+          <span>{{key}}</span>
+        </li>
+      </ul>
+
+      <ul *ngIf="flagType === 'country'">
+        <li *ngFor="let key of flagsMap.keys();"
+            (mousedown)="selectedKey = key; toggleList()">
+          <div class="flag-icon flag-icon-{{flagsMap.get(key)}}"></div>
+          <span>{{key}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

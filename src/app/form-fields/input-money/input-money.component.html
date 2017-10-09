@@ -1,0 +1,16 @@
+<div class="content"
+     [class.focused]="isFocused"
+     [class.has-value]="!!value && value.length !== 0"
+     [class.hover]="isHovering">
+  <div class="currency-symbol">
+    <span>{{currencyType | currencySymbol}}</span>
+  </div>
+  <input #input type="text"
+         [ngModel]="!isFocused && !isUndefinedOrNaN(value) ? (value | number:'1.2-2') : value"
+         (ngModelChange)="value = $event.toString()"
+         (focus)="onFocus()"
+         (blur)="onBlur()"
+         (mouseenter)="isHovering = true"
+         (mouseleave)="isHovering = false">
+  <div class="placeholder">{{placeholder}}</div>
+</div>

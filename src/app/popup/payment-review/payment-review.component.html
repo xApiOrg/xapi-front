@@ -1,0 +1,21 @@
+<div class="section">
+  <div class="section-header">Payee</div>
+  <ul>
+    <li class="capitalize">Name: {{!!payee ? payee.getName() : ''}} </li>
+    <li>IBAN: {{!!payee ? payee.getAccount().getNumber() : ''}}</li>
+  </ul>
+</div>
+<div class="section">
+  <div class="section-header">Account</div>
+  <ul>
+    <li class="capitalize">Name: {{!!account ? account.getName() : ''}}</li>
+    <li>Card / Account number: {{!!account ? account.getNumber() : ''}}</li>
+  </ul>
+</div>
+<div class="section">
+  <div class="section-header">Payment</div>
+  <ul>
+    <li>You pay: {{!!fromCurrency && isAssignedAndNumeric(fromCredit) ? (fromCredit | currency:fromCurrency:true:'1.2-2') : ''}} (fees included)</li>
+    <li>Payee receives: {{!!toCurrency && isAssignedAndNumeric(toCredit) ? (toCredit | currency:toCurrency:true:'1.2-2'): ''}}</li>
+  </ul>
+</div>

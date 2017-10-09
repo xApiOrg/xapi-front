@@ -1,0 +1,26 @@
+.section {
+
+}
+
+.section + .section {
+  margin-top: 10px;
+}
+
+.section:last-child {
+  margin-bottom: 10px;
+}
+
+.section-header {
+  font-size: 125%;
+}
+
+ul {
+  margin: 0;
+  border-left: 3px solid lightgray;
+  padding-left: 10px;
+  box-shadow: -3px 0 0px lightgrey;
+}
+
+li.capitalize {
+  text-transform: capitalize;
+}

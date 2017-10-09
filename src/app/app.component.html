@@ -1,0 +1,59 @@
+<form action="/login" method="POST">
+  <input type="text" name="username" value="username">
+  <input type="text" name="password" value="password">
+  <input type="submit" value="submit">
+</form>
+
+<div class="title-bar">
+  <div class="title">Make a payment</div>
+</div>
+
+<div class="workflow">
+  <app-step-manager>
+    <!--STEP ONE: PAYEE SELECTION-->
+    <app-step [name]="'payeeSelect'" [title]="'Send money to:'" [selectedProperties]="payeeSelectedProperties">
+      <app-tabs-manager>
+        <app-tab [title]="'Create a new payee'">
+          <app-new-payee (submitNewRecipient)="payee = $event"></app-new-payee>
+        </app-tab>
+
+        <app-tab [title]="'Select an existing payee'">
+          <app-payee-selector [(selectedRecipient)]="payee"></app-payee-selector>
+        </app-tab>
+      </app-tabs-manager>
+    </app-step>
+
+    <!--STEP TWO: ACCOUNT SELECTION-->
+    <app-step [name]="'accountSelect'" [title]="'Pay with:'" [selectedProperties]="accountSelectedProperties">
+      <app-tabs-manager>
+        <app-tab [title]="'Select an account'">
+          <app-account-selector [(selectedAccount)]="account"></app-account-selector>
+        </app-tab>
+      </app-tabs-manager>
+    </app-step>
+
+    <!--STEP THREE: TRANSACTION FORM-->
+    <app-step [name]="'formFill'" [title]="'Set up payment'" [selectedProperties]="formSelectedProperties">
+      <app-tabs-manager>
+        <app-tab [title]="'Payment details'">
+          <app-payment></app-payment>
+        </app-tab>
+      </app-tabs-manager>
+    </app-step>
+  </app-step-manager>
+</div>
+
+<app-popup>
+  <app-popup-option [name]="'review'" [title]="'Please review your transaction'">
+    <div style="padding-bottom: 10px;">
+      <app-transaction-review></app-transaction-review>
+    </div>
+    <button type="button" (click)="popupService.changeVisibility(false)">
+      Go back
+    </button>
+    <button type="button" (click)="popupService.changeVisibility(false);paymentService.proceed()">
+      Place transaction
+      <span class="glyphicon glyphicon-arrow-right"></span>
+    </button>
+  </app-popup-option>
+</app-popup>

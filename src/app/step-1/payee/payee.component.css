@@ -1,0 +1,104 @@
+.recipient-container {
+  display: inline-block;
+  position: relative;
+  width: 150px;
+  max-width: 150px;
+  background: white;
+  box-shadow: 0 2px 5px lightgray;
+  font-size: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 250ms, transform 250ms;
+}
+
+.recipient-container:hover {
+  box-shadow: 0 5px 15px lightgray;
+  transform: scale(1.05);
+}
+
+.recipient-container * {
+  cursor: pointer !important;
+}
+
+.recipient-header {
+  position: relative;
+  padding: 15px 15px 5px;
+  background: white;
+  color: #FF0000;
+  outline: 0 solid red;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  z-index: 0;
+  transition: color 100ms;
+}
+
+.recipient-header::after {
+  display: block;
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: red;
+  max-height: 0;
+  transition: max-height 500ms;
+  z-index: -1;
+}
+
+.recipient-container:hover .recipient-header {
+  color: white !important;
+}
+
+.recipient-container:hover .recipient-header::after {
+  max-height: 200px;
+}
+
+.recipient-header span {
+  display: block;
+  font-size: 40px;
+  margin-bottom: 5px;
+}
+
+.recipient-body {
+  padding: 10px 10px 20px;
+  color: gray;
+  position: relative;
+}
+
+.account {
+  display: block;
+}
+
+.ending {
+  display: block;
+}
+
+.highlighted {
+  color: gray;
+}
+
+.text {
+  font-size: 100% !important;
+  width: 100%;
+  overflow: hidden;
+  text-transform: capitalize;
+}
+
+.flag {
+  display: block;
+  border-bottom: 1px solid lightgray;
+}
+
+.recipient-body-description {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  color: lightgray;
+  font-size: 70%;
+  height: 10px;
+}
